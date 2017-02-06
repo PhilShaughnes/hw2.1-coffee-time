@@ -2,7 +2,6 @@ require 'minitest/autorun'
 
 require './human'
 require './coffee'
-require './tea'
 
 class CaffeineTest < MiniTest::Test
   def test_humans_tend_to_be_sleepy
@@ -43,7 +42,7 @@ class EspressoTest < MiniTest::Test
 
   def test_humans_can_drink_espresso
     joe = Human.new "Joe"
-    esp = Coffee.new("Espresso", 0.4, 1)
+    esp = Espresso.new("Espresso")
     assert esp.full?
 
     joe.buy esp
@@ -53,11 +52,11 @@ class EspressoTest < MiniTest::Test
     assert esp.empty?
   end
 
-  def test_chris_can_drink_all_the_coffee
+  def test_chris_can_drink_all_the_espresso
     chris = Human.new("Chris", 2.2)
 
     6.times do
-      esp = Coffee.new("Espresso", 0.4, 1)
+      esp = Espresso.new("Espresso")
       chris.buy esp
       assert esp.full?
       chris.drink!
@@ -67,58 +66,35 @@ class EspressoTest < MiniTest::Test
   end
 end
 
-class EspressoTest < MiniTest::Test
+class TeaTest < MiniTest::Test
 
-  def test_humans_can_drink_espresso
+  def test_humans_can_drink_tea
     toby = Human.new "Toby"
-    esp = Coffee.new("Espresso", 0.4, 1)
-    assert esp.full?
+    gtea = Tea.new("Green")
+    assert gtea.full?
 
-    joe.buy esp
-    joe.drink!
-    assert(joe.alertness.between?(0.33, 0.55))
-    refute esp.full?
-    assert esp.empty?
+    toby.buy gtea
+    toby.drink!
+    assert(toby.alertness.between?(0.2, 0.3))
+    refute gtea.full?
+    refute gtea.empty?
   end
 
-  def test_chris_can_drink_all_the_coffee
-    chris = Human.new("Chris", 2.2)
+  def test_steffi_can_keep_drinking_all_the_tea
+    steffi = Human.new("Steffi")
+    chai = Tea.new("Chai")
+    chai2 = Tea.new("Chai")
 
-    6.times do
-      esp = Coffee.new("Espresso", 0.4, 1)
-      chris.buy esp
-      assert esp.full?
-      chris.drink!
-      assert esp.empty?
-    end
-    assert chris.alertness > chris.goal_alert
+    steffi.buy chai
+    assert chai.full?
+    3.times{ steffi.drink! }
+    assert chai.empty?, chai.inspect
+
+    steffi.buy chai2
+    assert chai2.full?
+    3.times{ steffi.drink! }
+    assert chai2.empty?, chai2.inspect
+
+    assert steffi.alertness > steffi.goal_alert, steffi.alertness.inspect
   end
 end
-
-# class TeaTest < MiniTest::Test
-#
-#   def test_humans_can_drink_espresso
-#     toby = Human.new "Toby"
-#     esp = Coffee.new("Espresso", 0.4, 1)
-#     assert esp.full?
-#
-#     joe.buy esp
-#     joe.drink!
-#     assert(joe.alertness.between?(0.33, 0.55))
-#     refute esp.full?
-#     assert esp.empty?
-#   end
-#
-#   def test_chris_can_drink_all_the_coffee
-#     chris = Human.new("Chris", 2.2)
-#
-#     6.times do
-#       esp = Coffee.new("Espresso", 0.4, 1)
-#       chris.buy esp
-#       assert esp.full?
-#       chris.drink!
-#       assert esp.empty?
-#     end
-#     assert chris.alertness > chris.goal_alert
-#   end
-# end
