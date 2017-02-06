@@ -2,6 +2,7 @@ require 'minitest/autorun'
 
 require './human'
 require './coffee'
+require './tea'
 
 class CaffeineTest < MiniTest::Test
   def test_humans_tend_to_be_sleepy
@@ -37,3 +38,87 @@ class CaffeineTest < MiniTest::Test
     assert trevor.alertness > 0.9
   end
 end
+
+class EspressoTest < MiniTest::Test
+
+  def test_humans_can_drink_espresso
+    joe = Human.new "Joe"
+    esp = Coffee.new("Espresso", 0.4, 1)
+    assert esp.full?
+
+    joe.buy esp
+    joe.drink!
+    assert(joe.alertness.between?(0.33, 0.55))
+    refute esp.full?
+    assert esp.empty?
+  end
+
+  def test_chris_can_drink_all_the_coffee
+    chris = Human.new("Chris", 2.2)
+
+    6.times do
+      esp = Coffee.new("Espresso", 0.4, 1)
+      chris.buy esp
+      assert esp.full?
+      chris.drink!
+      assert esp.empty?
+    end
+    assert chris.alertness > chris.goal_alert
+  end
+end
+
+class EspressoTest < MiniTest::Test
+
+  def test_humans_can_drink_espresso
+    toby = Human.new "Toby"
+    esp = Coffee.new("Espresso", 0.4, 1)
+    assert esp.full?
+
+    joe.buy esp
+    joe.drink!
+    assert(joe.alertness.between?(0.33, 0.55))
+    refute esp.full?
+    assert esp.empty?
+  end
+
+  def test_chris_can_drink_all_the_coffee
+    chris = Human.new("Chris", 2.2)
+
+    6.times do
+      esp = Coffee.new("Espresso", 0.4, 1)
+      chris.buy esp
+      assert esp.full?
+      chris.drink!
+      assert esp.empty?
+    end
+    assert chris.alertness > chris.goal_alert
+  end
+end
+
+# class TeaTest < MiniTest::Test
+#
+#   def test_humans_can_drink_espresso
+#     toby = Human.new "Toby"
+#     esp = Coffee.new("Espresso", 0.4, 1)
+#     assert esp.full?
+#
+#     joe.buy esp
+#     joe.drink!
+#     assert(joe.alertness.between?(0.33, 0.55))
+#     refute esp.full?
+#     assert esp.empty?
+#   end
+#
+#   def test_chris_can_drink_all_the_coffee
+#     chris = Human.new("Chris", 2.2)
+#
+#     6.times do
+#       esp = Coffee.new("Espresso", 0.4, 1)
+#       chris.buy esp
+#       assert esp.full?
+#       chris.drink!
+#       assert esp.empty?
+#     end
+#     assert chris.alertness > chris.goal_alert
+#   end
+# end
