@@ -1,5 +1,4 @@
 require 'minitest/autorun'
-
 require './human'
 require './coffee'
 
@@ -83,17 +82,14 @@ class TeaTest < MiniTest::Test
   def test_steffi_can_keep_drinking_all_the_tea
     steffi = Human.new("Steffi")
     chai = Tea.new("Chai")
-    chai2 = Tea.new("Chai")
 
-    steffi.buy chai
-    assert chai.full?
-    3.times{ steffi.drink! }
-    assert chai.empty?, chai.inspect
-
-    steffi.buy chai2
-    assert chai2.full?
-    3.times{ steffi.drink! }
-    assert chai2.empty?, chai2.inspect
+    2.times do #drink 2 full tea's too get alertness up!
+      chai = Tea.new("Chai")
+      steffi.buy chai
+      assert chai.full?
+      chai.volume.times{ steffi.drink! } #drinks the full beverage!
+      assert chai.empty?, chai.inspect
+    end
 
     assert steffi.alertness > steffi.goal_alert, steffi.alertness.inspect
   end
